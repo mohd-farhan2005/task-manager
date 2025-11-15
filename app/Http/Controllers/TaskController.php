@@ -7,12 +7,19 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index()
-    {
-        $tasks = Task::where('user_id', auth()->id())->get();
+  public function index(Request $request)
+{
+    $query = Task::where('user_id', auth()->id());
 
-        return view('tasks.index', compact('tasks'));
+    // Apply status filter if selected
+    if ($request->has('status') && $request->status != '') {
+        $query->where('status', $request->status);
     }
+
+    $tasks = $query->orderBy('id', 'desc')->get();
+
+    return view('tasks.index', compact('tasks'));
+}
 
     public function create()
     {

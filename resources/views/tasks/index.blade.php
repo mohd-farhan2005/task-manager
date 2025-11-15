@@ -8,7 +8,18 @@
 @endif
 
 <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add Task</a>
+<form method="GET" class="mb-3 d-flex" style="gap: 10px;">
+    <select name="status" class="form-select" style="max-width: 250px;">
+        <option value="">-- Filter by Status --</option>
+        <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+        <option value="In Progress" {{ request('status') == 'In Progress' ? 'selected' : '' }}>In Progress</option>
+        <option value="Completed" {{ request('status') == 'Completed' ? 'selected' : '' }}>Completed</option>
+    </select>
 
+    <button class="btn btn-primary">Apply</button>
+
+    <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Reset</a>
+</form>
 <table class="table table-bordered">
     <thead>
         <tr>
